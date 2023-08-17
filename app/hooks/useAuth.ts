@@ -1,1 +1,5 @@
-export const useAuth = () => null
+import { useContext } from 'react'
+
+import { AuthContext } from '@/providers/auth/AuthProvider'
+
+export const useAuth = () => useContext(AuthContext)
