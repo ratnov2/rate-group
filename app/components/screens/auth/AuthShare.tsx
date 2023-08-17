@@ -8,9 +8,9 @@ import VerifyPhone from './verify-phone/VerifyPhone'
 const AuthShare: FC<{ children?: ReactNode }> = ({ children }) => {
 	const { stepAuth } = useContext(StepAuthorizationContext)
 
-	//if (!stepAuth.isPhone) return <PhoneAuth /> // uncommented after tests
+	if (!stepAuth.isPhone) return <PhoneAuth /> // uncommented after tests
 
-	// if (!stepAuth.isFalsePhone) return <VerifyPhone />
+	if (!stepAuth.isFalsePhone) return <VerifyPhone />
 
 	if (!stepAuth.isFalsePhone) return <FullAuth />
 

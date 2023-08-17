@@ -1,8 +1,11 @@
 import { Button, Stack, Typography, styled } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
-import { FC, useContext, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { FC, createRef, useContext, useEffect, useRef, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import {  IMaskInput, useIMask } from 'react-imask'
 
+import IMask from 'imask'
 import { IAuthPhone } from '@/shared/types/auth.interface'
 
 import { pattern } from '@/utils/validate-phone-number'
@@ -13,12 +16,17 @@ import ButtonSubmit from 'ui/form-ui/button/Button'
 import PhoneField from './PhoneField'
 import { AuthService } from '@/services/auth/auth.service'
 
+// const dy = dynamic(()=>import(''))
+
 const PhoneAuth: FC = () => {
 	const { stepAuth, HandlerSetStepAuth } = useContext(
 		StepAuthorizationContext
 	)
-
+	const [opts, setOpts] = useState({ mask: Number })
 	const [phoneText, setPhoneText] = useState('')
+	/////
+
+	///
 
 	const handlerPhoneText = (phone: string) => {
 		setPhoneText(phone)
@@ -44,16 +52,35 @@ const PhoneAuth: FC = () => {
 	})
 
 	const onSubmit: SubmitHandler<IAuthPhone> = data => {
-		console.log(data.phone.replace(pattern, '+7 ($2) $3-$4-$5'))
+		console.log('weffew')
 		mutateIsPhone(data.phone)
 	}
 
+	// const [ref, setRef] = useState()
+	const [ref, setRef] = useState()
+	const maskOptions = {
+		mask: '+{6}(000)000-00-00'
+	}
+	
+	
 	return (
 		<Stack>
 			<Typography sx={{ marginBottom: 4 }}>
 				Введите номер телефона для входа или регистрации
 			</Typography>
-			<PhoneField register={register} errors={errors} phoneText = {phoneText} handlerText = {handlerPhoneText}/>
+			<PhoneField
+				register={register}
+				errors={errors}
+				phoneText={phoneText}
+				handlerText={handlerPhoneText}
+			/>
+			{/* <IMaskInput
+				mask={mask}
+				// ref={newRef => setRef(newRef)}
+				// onChange={props.onChange}
+				// value={props.value}
+			/> */}
+			{/* <input ref={newRef => setRef(newRef)} /> */}
 			<Stack sx={{ marginTop: 4 }}>
 				<ButtonSubmit onClick={handleSubmit(onSubmit)}>
 					Далее

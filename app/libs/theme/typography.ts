@@ -80,8 +80,8 @@ export const typography: TypographyOptions = {
 		...responsiveFontSizes({ sm: 12, md: 12, lg: 12 })
 	},
 	subtitle1: {
-		fontWeight: 500,
-		lineHeight: 18 / 15,
+		fontWeight: 300,
+		lineHeight: 'normal',
 		fontSize: pxToRem(15)
 	},
 	subtitle2: {
