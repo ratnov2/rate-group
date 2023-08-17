@@ -20,7 +20,7 @@ export const StepAuthorizationContext = createContext({
 		isFalsePhone: false, // проверка на ответ запроса телефона
 		phone: '+79807052934' /// set null after
 	},
-	HandlerSetStepAuth: (object: any) => ''
+	HandlerSetStepAuth: (object: any) => {}
 })
 
 const Auth = () => {

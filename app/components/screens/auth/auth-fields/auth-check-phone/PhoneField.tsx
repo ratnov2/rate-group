@@ -36,7 +36,7 @@ const PhoneField: FC<IAuthFields> = ({
 			error={errors?.phone?.message}
 			value={phoneText}
 			//.replace(pattern, '+7 ($2) $3-$4-$5')
-			onChange={e => handlerText(e.currentTarget.value)}
+			onChange={e => handlerText(String(e.currentTarget.value))}
 		/>
 	)
 }

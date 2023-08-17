@@ -22,6 +22,8 @@ const AuthFields: FC<IAuthFields> = ({ register, isPassRequired }) => {
 					// 	message:'This email is not a valid'
 					//   }
 				})}
+				type='password'
+				textLabel='Password'
 			/>
 			<Field
 				{...register('password', {

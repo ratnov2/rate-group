@@ -1,11 +1,12 @@
-import { Input, Stack, TextField, styled } from '@mui/material'
+// @ts-nocheck
+import { Input, InputProps, Stack, TextField, styled } from '@mui/material'
 import zIndex from '@mui/material/styles/zIndex'
 import cn from 'classnames'
 import React, { FC, InputHTMLAttributes } from 'react'
 
 import { TypeFieldProps } from './field.interface'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface Props extends InputHTMLAttributes<InputProps> {
 	type: string
 	textLabel: string
 	error?: string
