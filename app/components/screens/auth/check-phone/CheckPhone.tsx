@@ -21,9 +21,7 @@ import { AuthService } from '@/services/auth/auth.service'
 const CheckPhone: FC = () => {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
-	const { stepAuth, HandlerSetStepAuth } = useContext(
-		StepAuthorizationContext
-	)
+
 	const [phoneText, setPhoneText] = useState('')
 
 	const handlerPhoneText = (phone: string) => {
@@ -34,17 +32,19 @@ const CheckPhone: FC = () => {
 		handleSubmit,
 		reset,
 		register,
-		formState: { errors, isValid }
+		formState: { errors, isValid },
+		getValues
 	} = useForm<IAuthPhone>({
 		mode: 'onChange'
 	})
-
+	console.log(getValues());
+	
 	const { mutate: mutateIsPhone } = useMutation(
 		['get-is-num'],
 		(phone: string) => AuthService.checkPhone(phone),
 		{
 			onSuccess: data => {
-				if (data) {
+				if (data) { 
 					router.push('/auth/login')
 				} else {
 					router.push('/auth/verify-phone')

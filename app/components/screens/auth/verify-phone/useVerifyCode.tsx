@@ -16,7 +16,7 @@ const useVerifyCode = () => {
 		(data: { code: number }) =>
 			AuthService.checkVerifyCode(String(phone), data.code),
 		{
-			// onError:()=>{},
+			onError:()=>{},
 			onSuccess: () => router.push('/auth/new-account')
 		}
 	)
@@ -29,7 +29,6 @@ const useVerifyCode = () => {
 		{
 			retry: false,
 			onError: (error: any) => {
-				console.log('errorara', error)
 				if (error.message === 'Phone number already verified') {
 					router.push('/auth/new-account')
 				}

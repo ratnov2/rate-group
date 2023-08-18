@@ -68,6 +68,7 @@ const VerifyPhone: FC = () => {
 		handleSubmit,
 		reset,
 		register,
+		control,
 		formState: { errors, isValid }
 	} = useForm<IVerifyCode>({
 		mode: 'onChange'
@@ -87,7 +88,7 @@ const VerifyPhone: FC = () => {
 					На номер {stepAuth.phone} поступит СМС,
 					<br /> введите 4 цифры кода из СМС
 				</Typography>
-				<PhoneVerifyFields errors={errors} register={register} />
+				<PhoneVerifyFields errors={errors} register={register} control={control}/>
 				{stepVerify && (
 					<Stack>
 						<Stack>

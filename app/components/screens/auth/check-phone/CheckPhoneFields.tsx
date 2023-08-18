@@ -7,6 +7,7 @@ import { IMask, IMaskInput } from 'react-imask'
 
 import { IAuthFormData, IAuthPhone } from '@/shared/types/auth.interface'
 
+import { NumberMask } from '@/utils/auth-mask/auth-mask'
 import { pattern, validatePhoneNumber } from '@/utils/validate-phone-number'
 
 import Field from 'ui/form-ui/Field/Field'
@@ -24,28 +25,8 @@ interface IAuthFields {
 const CheckPhoneFields: FC<IAuthFields> = ({
 	register,
 	isPassRequired,
-	errors,
-	handlerText,
-	phoneText
+	errors
 }) => {
-
-	// useEffect(() => {
-	// 	if (ref) {
-	// 		const mask = IMask(ref as unknown as InputMaskElement, maskOptions)
-	// 	}
-	// }, [])
-	// `numberPipe` is just a function, call it to format values
-	// "1,00"
-
-	// if `numberPipe` will not be reused, then just use `IMask.pipe` inplace:
-	// IMask.pipe('1', {
-	// 	mask: Number,
-	// 	scale: 2,
-	// 	thousandsSeparator: ' ',
-	// 	normalizeZeros: true,
-	// 	padFractionalZeros: true
-	// })
-
 	return (
 		<>
 			<Field
@@ -59,8 +40,7 @@ const CheckPhoneFields: FC<IAuthFields> = ({
 				type='tel'
 				textLabel='Номер телефона'
 				error={errors.phone?.message}
-				// value={phoneText}
-				// onChange={e => handlerText(String(e.currentTarget.value))}
+				// typeMask={NumberMask}
 			/>
 		</>
 	)

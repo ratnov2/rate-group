@@ -1,6 +1,12 @@
 import { Stack, TextField, styled } from '@mui/material'
 import { FC } from 'react'
-import { FieldErrors, UseFormRegister } from 'react-hook-form'
+import {
+	Control,
+	Controller,
+	FieldErrors,
+	UseFormRegister
+} from 'react-hook-form'
+import MaskedInput from 'react-input-mask'
 
 import { IVerifyCode } from '@/shared/types/auth.interface'
 
@@ -12,9 +18,14 @@ interface IPhoneVerifyFields {
 	register: UseFormRegister<IVerifyCode>
 	isPassRequired?: boolean
 	errors: FieldErrors<IVerifyCode>
+	control: Control<IVerifyCode, any>
 }
 
-const PhoneVerifyFields: FC<IPhoneVerifyFields> = ({ errors, register }) => {
+const PhoneVerifyFields: FC<IPhoneVerifyFields> = ({
+	errors,
+	register,
+	control
+}) => {
 	// const isNumber = (index: number, string: string) => {
 	// 	console.log(string === ' ')
 
@@ -57,27 +68,9 @@ const PhoneVerifyFields: FC<IPhoneVerifyFields> = ({ errors, register }) => {
 					required: true
 				})}
 				type='number'
-				// textLabel='Введите пароль'
 				error={errors.fourCode?.message}
 				sharedStyle='square'
 			/>
-			{/* <StyledPhoneVerifyField
-				type='number'
-				value={code[0]}
-				onChange={e => isNumber(0, e.currentTarget.value)}
-			/>
-			<StyledPhoneVerifyField
-				type='number'
-				onChange={e => setCode(1, Number(e.currentTarget.value))}
-			/>
-			<StyledPhoneVerifyField
-				type='number'
-				onChange={e => setCode(2, Number(e.currentTarget.value))}
-			/>
-			<StyledPhoneVerifyField
-				type='number'
-				onChange={e => setCode(3, Number(e.currentTarget.value))}
-			/> */}
 		</StyledPhoneVerify>
 	)
 }

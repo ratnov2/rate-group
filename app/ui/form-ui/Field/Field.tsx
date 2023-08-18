@@ -9,8 +9,17 @@ import {
 } from '@mui/material'
 import zIndex from '@mui/material/styles/zIndex'
 import cn from 'classnames'
-import React, { FC, InputHTMLAttributes, useEffect, useState } from 'react'
+import React, {
+	FC,
+	ForwardedRef,
+	InputHTMLAttributes,
+	useEffect,
+	useState
+} from 'react'
 import { IMask, IMaskInput } from 'react-imask'
+import ReactInputMask from 'react-input-mask'
+
+import { NumberMask } from '@/utils/auth-mask/auth-mask'
 
 import { TypeFieldProps } from './field.interface'
 import AuthBorderSvg from '@/libs/svgs/AuthBorderSvg'
@@ -21,95 +30,37 @@ interface Props extends InputHTMLAttributes<InputProps> {
 	error?: string
 	sharedStyle?: string
 	placeholder?: string
+	typeMask?: (value: string, ref: ForwardedRef<HTMLInputElement>) => void
 }
-const mask = [
-	{ mask: '{55} 0000-0000' },
-	{ mask: '(44) 00-00-0000' }
-	// { mask: '(375) 00000-0000' },
-	// { mask: '(00) 00000-0000' }
-]
-//const PhoneMask = '+00 {21} 0 000 0000'
-const PhoneMask = [
-	{
-		mask: '+00 {21} 0 000 0000',
-		startsWith: '30',
-		lazy: false,
-		country: 'Greece'
-	},
-	{
-		mask: '+0 000 000-00-00',
-		startsWith: '7',
-		lazy: false,
-		country: 'Russia'
-	},
-	{
-		mask: '+00-0000-000000',
-		startsWith: '91',
-		lazy: false,
-		country: 'India'
-	}
-]
 
 const Field = React.forwardRef<HTMLInputElement, Props>(
-	({ type, textLabel, error, sharedStyle, placeholder, ...rest }, ref) => {
-		// const mask = IMask(ref, maskOptions)
-		const [ref2, setRef] = useState()
-		console.log(ref2)
-		const maskOptions = {
-			mask: [
-				{
-					mask: '+00 {21} 0 000 0000',
-					startsWith: '30',
-					lazy: false,
-					country: 'Greece'
-				},
-				{
-					mask: '+0 000 000-00-00',
-					startsWith: '7',
-					lazy: false,
-					country: 'Russia'
-				},
-				{
-					mask: '+00-0000-000000',
-					startsWith: '91',
-					lazy: false,
-					country: 'India'
-				},
-				{
-					mask: '0000000000000',
-					startsWith: '',
-					country: 'unknown'
-				}
-			],
-			dispatch: (appended, dynamicMasked) => {
-				const number = (dynamicMasked.value + appended).replace(
-					/\D/g,
-					''
-				)
-
-				return dynamicMasked.compiledMasks.find(
-					m => number.indexOf(m.startsWith) === 0
-				)
-			}
-		}
-		let mask
-		useEffect(() => {
-			if (!!ref) {
-				//mask = IMask(ref, maskOptions)
-			}
-		}, [ref])
+	(
+		{ type, textLabel, error, sharedStyle, placeholder, typeMask, ...rest },
+		ref
+	) => {
+		// const [state, setState] = useState({ mask: '99999999999', value: '' })
 		return (
 			<StyledField>
 				<StyledStackInput className={cn(sharedStyle)}>
 					<label>
 						<Typography variant='subtitle1'>{textLabel}</Typography>
 					</label>
+					{/* <ReactInputMask
+						{...state}
+						ref={ref}
+						maskChar={null}
+						onChange={e => {
+							onChange(e)
+							if (!!typeMask)
+								setState(typeMask(e.currentTarget.value, e))
+						}}
+						{...rest}
+					/> */}
 					<input
 						ref={ref}
-						mask={mask}
 						type={type}
-						{...rest}
 						placeholder={placeholder}
+						{...rest}
 					/>
 				</StyledStackInput>
 
