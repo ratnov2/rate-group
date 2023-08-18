@@ -33,16 +33,16 @@ const VerifyPhone: FC = () => {
 			AuthService.checkVerifyCode(data.phone, data.code)
 	)
 
-	const sendVerifyCode = useQuery(
-		['send-verify-code'],
-		() => {
-			setIsSended(true)
-			return AuthService.sendVerifyCode(stepAuth.phone)
-		},
-		{
-			retry: false
-		}
-	)
+	// const sendVerifyCode = useQuery(
+	// 	['send-verify-code'],
+	// 	() => {
+	// 		setIsSended(true)
+	// 		return AuthService.sendVerifyCode(stepAuth.phone)
+	// 	},
+	// 	{
+	// 		retry: false
+	// 	}
+	// )
 
 	return (
 		<Stack>

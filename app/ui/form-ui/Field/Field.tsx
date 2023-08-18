@@ -105,11 +105,9 @@ const Field = React.forwardRef<HTMLInputElement, Props>(
 					</label>
 					<input
 						ref={ref}
-						// {...() => setRef(ref)}
 						mask={mask}
 						type={type}
 						{...rest}
-						// onAccept={(value, mask) => console.log(value, mask)}
 						placeholder='8 916 777 77 77'
 					/>
 				</StyledStackInput>
@@ -156,9 +154,6 @@ const StyledField = styled(Stack)(({ theme }) => ({
 }))
 
 const StyledStackInput = styled(Stack)(({ theme }) => ({
-	// borderRadius: 1,
-	// padding: theme.spacing(2),
-	color: '#313149',
 	padding: 2,
 	display: 'inline-block',
 	margin: '75px 0',
