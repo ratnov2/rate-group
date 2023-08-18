@@ -17,9 +17,10 @@ import AuthBorderSvg from '@/libs/svgs/AuthBorderSvg'
 
 interface Props extends InputHTMLAttributes<InputProps> {
 	type: string
-	textLabel: string
+	textLabel?: string
 	error?: string
 	sharedStyle?: string
+	placeholder?: string
 }
 const mask = [
 	{ mask: '{55} 0000-0000' },
@@ -50,7 +51,7 @@ const PhoneMask = [
 ]
 
 const Field = React.forwardRef<HTMLInputElement, Props>(
-	({ type, textLabel, error, sharedStyle, ...rest }, ref) => {
+	({ type, textLabel, error, sharedStyle, placeholder, ...rest }, ref) => {
 		// const mask = IMask(ref, maskOptions)
 		const [ref2, setRef] = useState()
 		console.log(ref2)
@@ -98,8 +99,8 @@ const Field = React.forwardRef<HTMLInputElement, Props>(
 			}
 		}, [ref])
 		return (
-			<StyledField className={cn(sharedStyle)}>
-				<StyledStackInput>
+			<StyledField>
+				<StyledStackInput className={cn(sharedStyle)}>
 					<label>
 						<Typography variant='subtitle1'>{textLabel}</Typography>
 					</label>
@@ -108,7 +109,7 @@ const Field = React.forwardRef<HTMLInputElement, Props>(
 						mask={mask}
 						type={type}
 						{...rest}
-						placeholder='8 916 777 77 77'
+						placeholder={placeholder}
 					/>
 				</StyledStackInput>
 
@@ -136,7 +137,6 @@ const StyledField = styled(Stack)(({ theme }) => ({
 		padding: theme.spacing(0, 2, 0, 0.5),
 		color: theme.palette.background.neutral
 	},
-
 	'& input': {
 		padding: 10,
 		width: '100%',
@@ -151,12 +151,13 @@ const StyledField = styled(Stack)(({ theme }) => ({
 			color: theme.palette.background.neutral
 		}
 	}
+	//for cube
 }))
 
 const StyledStackInput = styled(Stack)(({ theme }) => ({
 	padding: 2,
 	display: 'inline-block',
-	margin: '75px 0',
+	margin: '15px 0',
 	position: 'relative',
 	zIndex: 0,
 	'&::before': {
@@ -171,12 +172,15 @@ const StyledStackInput = styled(Stack)(({ theme }) => ({
 
 		mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
 		maskComposite: 'exclude'
+	},
+	'&.square ': {
+		width: 80,
+		height: 80,
+		'& input': {
+			fontSize: 40,
+			textAlign: 'center'
+		}
 	}
-}))
-
-const StyledFieldInput = styled(Input)(({ theme }) => ({
-	borderRadius: 1,
-	padding: theme.spacing(2)
 }))
 
 export default Field

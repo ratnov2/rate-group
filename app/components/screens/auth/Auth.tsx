@@ -9,7 +9,7 @@ import logo from '@/assets/img/logo.png'
 
 import AuthFields from './AuthFields'
 import AuthShare from './AuthShare'
-import PhoneAuth from './auth-fields/auth-check-phone/PhoneAuth'
+import PhoneAuth from './check-phone/CheckPhone'
 import { useAuthMutations } from './useAuthMutations'
 
 // import { Button, Loader } from '@/ui'

@@ -21,7 +21,7 @@ const NewPasswordAuth: FC = () => {
 		handleSubmit,
 		reset,
 		register,
-		formState: { errors },
+		formState: { errors, isValid },
 		watch
 	} = useForm<IPasswordConfirm>({
 		mode: 'onChange'
@@ -43,11 +43,7 @@ const NewPasswordAuth: FC = () => {
 			/>
 			<Stack sx={{ marginTop: 2 }}>
 				<ButtonSubmit
-					// disabled={
-					// 	!!errors.confirmPassword?.message ||
-					// 	!!errors.password?.message
-					// }
-          disabled={true}
+					disabled={isValid}
 					onClick={handleSubmit(onSubmit)}
 				>
 					Сохранить и войти

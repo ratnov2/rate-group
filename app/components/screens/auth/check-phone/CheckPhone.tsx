@@ -1,68 +1,62 @@
-import { Button, Stack, Typography, styled } from '@mui/material'
+import { Stack, Typography, styled } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
-import dynamic from 'next/dynamic'
-import { FC, createRef, useContext, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
+import { FC, useContext, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import {  IMaskInput, useIMask } from 'react-imask'
 
-import IMask from 'imask'
 import { IAuthPhone } from '@/shared/types/auth.interface'
 
-import { pattern } from '@/utils/validate-phone-number'
+import { setPhone } from '@/store/auth/authSlice'
 
-import { StepAuthorizationContext } from '../../Auth'
+import { useAppDispatch } from '@/hooks/store.hook'
+
+import { StepAuthorizationContext } from '../Auth'
 import ButtonSubmit from 'ui/form-ui/button/Button'
 
-import PhoneField from './PhoneField'
+import PhoneField from './CheckPhoneFields'
 import { AuthService } from '@/services/auth/auth.service'
 
 // const dy = dynamic(()=>import(''))
 
-const PhoneAuth: FC = () => {
+const CheckPhone: FC = () => {
+	const dispatch = useAppDispatch()
+	const router = useRouter()
 	const { stepAuth, HandlerSetStepAuth } = useContext(
 		StepAuthorizationContext
 	)
-	const [opts, setOpts] = useState({ mask: Number })
 	const [phoneText, setPhoneText] = useState('')
-	/////
-
-	///
 
 	const handlerPhoneText = (phone: string) => {
 		setPhoneText(phone)
 	}
+
+	const {
+		handleSubmit,
+		reset,
+		register,
+		formState: { errors, isValid }
+	} = useForm<IAuthPhone>({
+		mode: 'onChange'
+	})
 
 	const { mutate: mutateIsPhone } = useMutation(
 		['get-is-num'],
 		(phone: string) => AuthService.checkPhone(phone),
 		{
 			onSuccess: data => {
-				HandlerSetStepAuth({ isPhone: true, isFalsePhone: data })
+				if (data) {
+					router.push('/auth/login')
+				} else {
+					router.push('/auth/verify-phone')
+				}
 			}
 		}
 	)
-
-	const {
-		handleSubmit,
-		reset,
-		register,
-		formState: { errors }
-	} = useForm<IAuthPhone>({
-		mode: 'onChange'
-	})
-
 	const onSubmit: SubmitHandler<IAuthPhone> = data => {
-		console.log('weffew')
+		dispatch(setPhone(data.phone))
 		mutateIsPhone(data.phone)
 	}
 
-	// const [ref, setRef] = useState()
-	const [ref, setRef] = useState()
-	const maskOptions = {
-		mask: '+{6}(000)000-00-00'
-	}
-	
-	
 	return (
 		<Stack>
 			<Typography sx={{ marginBottom: 4 }}>
@@ -74,15 +68,11 @@ const PhoneAuth: FC = () => {
 				phoneText={phoneText}
 				handlerText={handlerPhoneText}
 			/>
-			{/* <IMaskInput
-				mask={mask}
-				// ref={newRef => setRef(newRef)}
-				// onChange={props.onChange}
-				// value={props.value}
-			/> */}
-			{/* <input ref={newRef => setRef(newRef)} /> */}
 			<Stack sx={{ marginTop: 4 }}>
-				<ButtonSubmit onClick={handleSubmit(onSubmit)}>
+				<ButtonSubmit
+					disabled={!isValid}
+					onClick={handleSubmit(onSubmit)}
+				>
 					Далее
 				</ButtonSubmit>
 			</Stack>
@@ -117,4 +107,4 @@ const StyledStackOrElementShare = styled(Stack)(({ theme }) => ({
 	backgroundColor: 'white',
 	padding: theme.spacing(0, 1, 0, 1)
 }))
-export default PhoneAuth
+export default CheckPhone

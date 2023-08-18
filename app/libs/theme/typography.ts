@@ -50,15 +50,15 @@ export const typography: TypographyOptions = {
 		...responsiveFontSizes({ sm: 24, md: 24, lg: 24 })
 	},
 	h2: {
-		fontWeight: 500,
-		lineHeight: 27 / 22,
-		fontSize: pxToRem(22),
+		fontWeight: 600,
+		lineHeight: 'normal',
+		fontSize: pxToRem(20),
 		...responsiveFontSizes({ sm: 22, md: 22, lg: 22 })
 	},
 	h3: {
-		fontWeight: 500,
-		lineHeight: 22 / 18,
-		fontSize: pxToRem(18),
+		fontWeight: 400,
+		lineHeight: 'normal',
+		fontSize: pxToRem(20),
 		...responsiveFontSizes({ sm: 18, md: 18, lg: 18 })
 	},
 	h4: {

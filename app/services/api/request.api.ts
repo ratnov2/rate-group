@@ -12,8 +12,7 @@ export const request = async <T>(config: AxiosRequestConfig) => {
 		// 	text1: 'Request error',
 		// 	text2: errorCatch(error)
 		// })
-
-		return Promise.reject('error')
+		return Promise.reject(error.response?.data)
 	}
 
 	return instance(config).then(onSuccess).catch(onError)

@@ -22,11 +22,18 @@ export const removeTokensStorage = () => {
 	Cookies.remove('refreshToken')
 }
 
-export const getAccessToken = async () => {
+export const getAccessToken = () => {
 	const accessToken = Cookies.get('accessToken')
 	return accessToken || null
 }
 
+export const getUserFromStorage = () => {
+	try {
+		return JSON.parse(localStorage.getItem('user') || '{}')
+	} catch (e) {
+		return null
+	}
+}
 // export const deleteTokensStorage = async () => {
 // 	await deleteItemAsync(EnumSecureStore.ACCESS_TOKEN)
 // 	await deleteItemAsync(EnumSecureStore.REFRESH_TOKEN)

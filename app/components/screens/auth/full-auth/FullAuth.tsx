@@ -6,6 +6,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { IAuthFormData } from '@/shared/types/auth.interface'
 
+import { setUser } from '@/store/auth/authSlice'
+
+import { useAppDispatch } from '@/hooks/store.hook'
+
 import { StepAuthorizationContext } from '../Auth'
 import ButtonSubmit from 'ui/form-ui/button/Button'
 
@@ -13,23 +17,26 @@ import FullAuthFields from './FullAuthFields'
 import { AuthService } from '@/services/auth/auth.service'
 
 const FullAuth: FC = () => {
-	const { stepAuth } = useContext(StepAuthorizationContext)
+	const dispatch = useAppDispatch()
 	const { mutate: mutateIsPhone } = useMutation(
 		['login-register'],
-		(phone: string) => AuthService.checkPhone(phone)
+		(data: IAuthFormData) => AuthService.login(data.phone, data.password),
+		{
+			onSuccess: data => dispatch(setUser(data.user))
+		}
 	)
 
 	const {
 		handleSubmit,
 		reset,
 		register,
-		formState: { errors }
+		formState: { errors, isValid }
 	} = useForm<IAuthFormData>({
 		mode: 'onChange'
 	})
 
 	const onSubmit: SubmitHandler<IAuthFormData> = data => {
-		if (stepAuth) mutateIsPhone(data.phone)
+		mutateIsPhone({ phone: data.phone, password: data.password })
 	}
 
 	return (
@@ -39,10 +46,13 @@ const FullAuth: FC = () => {
 			</Typography>
 			<FullAuthFields register={register} errors={errors} />
 			<Typography>
-				<Link href='/auth/forgot-password'>Забыл пароль</Link>
+				<Link href='/auth/check-phone'>Забыл пароль</Link>
 			</Typography>
 			<Stack sx={{ marginTop: 2 }}>
-				<ButtonSubmit onClick={handleSubmit(onSubmit)}>
+				<ButtonSubmit
+					disabled={!isValid}
+					onClick={handleSubmit(onSubmit)}
+				>
 					Send
 				</ButtonSubmit>
 			</Stack>

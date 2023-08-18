@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import {
 	FC,
 	PropsWithChildren,
@@ -5,44 +6,47 @@ import {
 	useEffect,
 	useState
 } from 'react'
+
+import { setUser } from '@/store/auth/authSlice'
+
+import { useAppDispatch, useAppSelector } from '@/hooks/store.hook'
+
 import { IContext, TypeUserState } from './auth-provider.interface'
+import { getAccessToken, getUserFromStorage } from '@/services/auth/auth.helper'
 
-import { getAccessToken } from '@/services/auth/auth.helper'
-
-export const AuthContext = createContext({} as IContext)
-
+export const AuthContext = createContext({})
 
 const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
-	const [user, setUser] = useState<TypeUserState>(null)
+	const user = useAppSelector(state => state.auth.user)
+	const dispatch = useAppDispatch()
+	const router = useRouter()
+	const [verified, setVerified] = useState(false)
+	console.log('auth', user)
 
 	useEffect(() => {
-
-		const checkAccessToken = async () => {
+		const checkAccessToken = () => {
 			try {
-				const accessToken = await getAccessToken()
-
+				const accessToken = getAccessToken()
 				if (accessToken) {
-					//const user = await getUserFromStorage()
-
-					
+					const user = getUserFromStorage()
+					dispatch(setUser(user))
+					console.log('access')
+				} else {
+					router.replace('/auth/check-phone')
 				}
 			} catch {
 			} finally {
-				// await SplashScreen.hideAsync()
+				setVerified(true)
 			}
 		}
 		checkAccessToken()
-
-		return () => {
-			
-		}
 	}, [])
-
-	return (
-		<AuthContext.Provider value={{ user, setUser }}>
-			{children}
-		</AuthContext.Provider>
-	)
+	if (verified)
+		return (
+			<AuthContext.Provider value={{ user }}>
+				{children}
+			</AuthContext.Provider>
+		)
 }
 
 export default AuthProvider

@@ -1,7 +1,7 @@
 import { FC, ReactNode, useContext } from 'react'
 
 import { StepAuthorizationContext } from './Auth'
-import PhoneAuth from './auth-fields/auth-check-phone/PhoneAuth'
+import PhoneAuth from './check-phone/CheckPhone'
 import FullAuth from './full-auth/FullAuth'
 import VerifyPhone from './verify-phone/VerifyPhone'
 

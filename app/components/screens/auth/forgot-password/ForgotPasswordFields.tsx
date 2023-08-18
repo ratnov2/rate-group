@@ -29,7 +29,7 @@ const ForgotPasswordFields: FC<IAuthFields> = ({
 				})}
 				type='tel'
 				textLabel='Номер телефона'
-				// error={errors?.phone?.message}
+				error={errors.phone?.message}
 			/>
 			<Stack sx={{ marginTop: 2 }}>
 				<Field
@@ -42,7 +42,7 @@ const ForgotPasswordFields: FC<IAuthFields> = ({
 					})}
 					type='tel'
 					textLabel='Введите пароль'
-					// error={errors?.password?.message}
+					error={errors?.password?.message}
 				/>
 			</Stack>
 		</>

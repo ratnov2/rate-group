@@ -55,7 +55,7 @@ const ERROR = {
 const GREY = {
 	0: '#F6F6F6',
 	100: '#E5E7EB',
-	200: '#DCE1E6',
+	200: '#CECECE',
 	300: '#B0B0B0',
 	400: '#8E8E8E',
 	500: '#2E3540'
@@ -100,7 +100,7 @@ export const palette = {
 			light: GREY[100],
 			paper: GREY[200],
 			neutral: GREY[300],
-			dark: GREY[400],
+			dark: GREY[400], //
 			darker: GREY[500]
 		},
 		action: { active: PRIMARY.light, ...COMMON.action },

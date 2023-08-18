@@ -7,11 +7,23 @@ import { request } from '../api/request.api'
 import { removeTokensStorage, saveToStorage } from './auth.helper'
 
 export const AuthService = {
-	async main(variant: 'reg' | 'login', phone: string, password: string) {
+	async login(phone: string, password: string) {
 		const response = await request<IAuthResponse>({
-			url: getAuthUrl(`${variant === 'reg' ? '/register' : '/login'}`),
+			url: getAuthUrl(`/login`),
 			method: 'POST',
 			data: { phone, password }
+		})
+
+		if (response.accessToken) saveToStorage(response)
+		
+
+		return response
+	},
+	async register(phone: string, password: string, contract: string) {
+		const response = await request<IAuthResponse>({
+			url: getAuthUrl(`/register`),
+			method: 'POST',
+			data: { phone, password, contract }
 		})
 
 		if (response.accessToken) saveToStorage(response)

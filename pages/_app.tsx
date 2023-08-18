@@ -6,9 +6,13 @@ import {
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 
+import AuthProvider from '@/providers/auth/AuthProvider'
+
 import '@/assets/styles/globals.scss'
 
 import { store } from '@/store/store'
+
+import { useAppSelector } from '@/hooks/store.hook'
 
 import { ThemeProvider } from '@/libs/theme'
 
@@ -24,9 +28,11 @@ export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<Provider store={store}>
 			<QueryClientProvider client={queryClient}>
-				<ThemeProvider>
-					<Component {...pageProps} />
-				</ThemeProvider>
+				<AuthProvider>
+					<ThemeProvider>
+						<Component {...pageProps} />
+					</ThemeProvider>
+				</AuthProvider>
 			</QueryClientProvider>
 		</Provider>
 	)

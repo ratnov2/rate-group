@@ -21,11 +21,12 @@ const StyledButton = styled(Button)(({ theme }) => ({
 	borderRadius: 15,
 	background: 'linear-gradient(180deg, #86EAD7 16.98%, #34ACE0 100%)',
 	padding: theme.spacing(1.5),
-	cursor:'pointer',
+	cursor: 'pointer',
 	color: 'black',
+	textTransform: 'uppercase',
 	'&.Mui-disabled': {
-		cursor:'not-allowed'
-		// background: 'white'
+		cursor: 'not-allowed',
+		background: theme.palette.action.disabledBackground
 	}
 }))
 
